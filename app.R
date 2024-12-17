@@ -9,8 +9,8 @@ ui <- fluidPage(
       sliderInput("number", 
                   "Choose a number:", 
                   min = 1,
-                  max = 50,
-                  value = 25)
+                  max = 100,
+                  value = 42)
     ),
     
     mainPanel(
