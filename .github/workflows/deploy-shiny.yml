@@ -25,5 +25,17 @@ jobs:
         SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN }}
         SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET }}
       run: |
-        R -e 'rsconnect::setAccountInfo(name=Sys.getenv("SHINYAPPS_ACCOUNT_NAME"), token=Sys.getenv("SHINYAPPS_TOKEN"), secret=Sys.getenv("SHINYAPPS_SECRET"))'
-        R -e 'rsconnect::deployApp(appName = "my-shiny-app")'
+        R -e '
+        library(rsconnect)
+        options(rsconnect.force.update.apps = TRUE)
+        rsconnect::setAccountInfo(
+          name = Sys.getenv("SHINYAPPS_ACCOUNT_NAME"),
+          token = Sys.getenv("SHINYAPPS_TOKEN"),
+          secret = Sys.getenv("SHINYAPPS_SECRET")
+        )
+        rsconnect::deployApp(
+          appDir = ".",
+          appName = "my-shiny-app",
+          forceUpdate = TRUE
+        )
+        '
